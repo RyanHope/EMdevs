@@ -38,11 +38,11 @@ void SaccadeTimer::delta_conf(const Bag<IO_Type>& xb)
 
 void SaccadeTimer::output_func(Bag<IO_Type>& yb)
 {
-	Saccade *saccade = new Saccade(++_n, 0);
+	Saccade *saccade = new Saccade(++_n);
 	IO_Type output(labile, saccade);
 	yb.insert(output);
 	_time += _threshold;
-	//printf("%f\tSaccadeTimer: Threshold reached for new saccade[id=%d] \n", _time, saccade->id);
+	printf("%f\tSaccadeTimer: Threshold reached for new saccade[id=%d] \n", _time, saccade->id);
 }
 
 void SaccadeTimer::gc_output(Bag<IO_Type>& g)

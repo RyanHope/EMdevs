@@ -8,7 +8,7 @@
 #include "SaccadeExec.h"
 
 #include "CRISP.h"
-using namespace Rcpp;
+#include <Rcpp.h>
 
 using namespace std;
 using namespace adevs;
@@ -16,22 +16,27 @@ using namespace adevs;
 class StateListener: public EventListener< PortValue<Saccade*> >
 {
 	public:
-		StateListener(int n):fixations_start(0),fixations_end(0),durations(n){}
+		StateListener(int n):fixations_start(0),fixations_end(0),saccades(){}
 		int fixations_start;
 		int fixations_end;
-		std::vector<double> durations;
+		list<Saccade*> saccades;
+		double time = 0;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			//cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+			cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
 				if (fixations_start>0) {
 					++fixations_end;
-					//printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", ++fixations_end);
+					Saccade* s = saccades.back();
+					s->fixation_duration = t - time;
+					printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", fixations_end);
 				}
-				//printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
+				printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
 			} else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
 				++fixations_start;
-				//printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
-				//printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", ++fixations_start);
+				time = t;
+				saccades.push_back(new Saccade(*(Saccade*)x.value.value));
+				printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
+				printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", fixations_start);
 			}
 		}
 };
@@ -66,14 +71,23 @@ int crisp(
 	{
 		sim.execNextEvent();
 	}
-	/*std::vector<double> durations(n);
+	list<Saccade*>::iterator saccades = s->saccades.begin();
+	for ( ;saccades != s->saccades.end(); saccades++) {
+		cout << (*saccades)->id << "\t"
+				<< (*saccades)->cancelations << "\t"
+				<< (*saccades)->labile_stop - (*saccades)->labile_start << "\t"
+				<< (*saccades)->nonlabile_stop - (*saccades)->nonlabile_start << "\t"
+				<< (*saccades)->exec_stop - (*saccades)->exec_start << "\t"
+				<< (*saccades)->fixation_duration
+				<< endl;
+	}
+	std::vector<double> durations(n);
 	std::vector<double> cancelations(n);
 	std::vector<double> labile(n);
-	DataFrame d = DataFrame::create(
-			Named("duration")=durations,
-			Named("cancelations")=cancelations,
-			Named("labile")=labile
-			);
-	DataFrame d;*/
+	/*return Rcpp::DataFrame::create(
+			Rcpp::Named("duration")=durations,
+			Rcpp::Named("cancelations")=cancelations,
+			Rcpp::Named("labile")=labile
+			);*/
 	return 0;
 }
