@@ -1,0 +1,5 @@
+*.o
+crisp
+.project
+.cproject
+.settings

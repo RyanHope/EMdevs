@@ -1,0 +1,29 @@
+
+#ifndef __SaccadeMovementProgrammer_h_
+#define __SaccadeMovementProgrammer_h_
+#include "adevs.h"
+#include "Saccade.h"
+
+class SaccadeMovementProgrammer: public adevs::Atomic<IO_Type>
+{
+	public:
+		SaccadeMovementProgrammer(std::mt19937& twister);
+		void delta_int();
+		void delta_ext(double e, const adevs::Bag<IO_Type>& xb);
+		void delta_conf(const adevs::Bag<IO_Type>& xb);
+		void output_func(adevs::Bag<IO_Type>& yb);
+		double ta();
+		void gc_output(adevs::Bag<IO_Type>& g);
+		~SaccadeMovementProgrammer();
+		static const int nonlabile;
+		static const int execute;
+	private:
+		double _mean;
+		double _stdev;
+		std::mt19937 _twister;
+		double _time;
+		double _threshold;
+		Saccade* _saccade;
+};
+
+#endif

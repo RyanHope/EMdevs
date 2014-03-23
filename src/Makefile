@@ -1,27 +1,16 @@
-OMP = -fopenmp
-CFLAGS += ${OMP} -fPIC -Wall -I../include -I./
-OPTFLAG = -O3
+CXXFLAGS	= -march=native -O3 -pipe -std=c++11 -Wall -g -pedantic -fopenmp
+INCLUDE		= -Iinclude
 
-ADEVS_OBJS = \
-	rv.o \
-	poly.o \
-	time.o
+CRISP_OBJS	= SaccadeTimer.o SaccadeTargetPlanner.o SaccadeMovementProgrammer.o SaccadeExec.o
 
-.SUFFIXES: .cpp .c
+.SUFFIXES: .cpp
 .cpp.o:
-	${CXX} ${CFLAGS} ${OPTFLAG} -o $@ -c $<
-.c.o:
-	${CC} ${CFLAGS} ${OPTFLAG} -o $@ -c $<
+	${CXX} -c ${CXXFLAGS} ${INCLUDE} $<
+	
+all: crisp
 
-adevs: ${ADEVS_OBJS} 
-	ar -r libadevs.a ${ADEVS_OBJS}
-	${CXX} -shared -Wl,-soname,libadevs.so.2 -o libadevs.so.2.8 ${ADEVS_OBJS}
-
-install:
-	mkdir -p "${DESTDIR}"
-	install -m 755 -p libadevs.so.2.8 "${DESTDIR}"
-	ln -f -s libadevs.so.2.8 "${DESTDIR}/libadevs.so.2"
-	ln -f -s libadevs.so.2.8 "${DESTDIR}/libadevs.so"
-
+crisp: ${CRISP_OBJS} main.o
+	${CXX} ${CXXFLAGS} $^ -o $@
+	
 clean:
-	rm -f *.o core *.a *.so libadevs.so.*
+	rm -rf *.o crisp
