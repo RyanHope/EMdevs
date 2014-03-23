@@ -18,8 +18,7 @@ SaccadeTimer::SaccadeTimer(std::mt19937& twister, std::uniform_real_distribution
 
 double SaccadeTimer::ta()
 {
-	if (_n<10) return _threshold;
-	return DBL_MAX;
+	return _threshold;
 }
 
 void SaccadeTimer::delta_int()
