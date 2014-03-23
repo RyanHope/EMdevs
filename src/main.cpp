@@ -1,5 +1,6 @@
 #include "stdlib.h"
 #include "CRISP.h"
+#include "Data.h"
 
 using namespace std;
 
@@ -11,6 +12,6 @@ int main(int argc, char** argv)
 		if (n > 0) N = n;
 		else return(-1);
 	}
-	crisp(N, 250, 11, 180, 45, 40, 10, 40, 13);
+	list<CRISP_d*> data = crisp(N, 250, 11, 180, 45, 40, 10, 40, 13);
 	return 0;
 }

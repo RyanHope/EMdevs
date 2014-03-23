@@ -16,25 +16,33 @@ using namespace adevs;
 class StateListener: public EventListener< PortValue<Saccade*> >
 {
 	public:
-		StateListener(int n):fixations_start(0),fixations_end(0),saccades(){}
+		StateListener(int n):fixations_start(0),fixations_end(0),data(){}
 		int fixations_start;
 		int fixations_end;
-		list<Saccade*> saccades;
+		list<CRISP_d*> data;
 		double time = 0;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
 			cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
 				if (fixations_start>0) {
 					++fixations_end;
-					Saccade* s = saccades.back();
-					s->fixation_duration = t - time;
+					CRISP_d* d = data.back();
+					d->fixation = t - time;
 					printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", fixations_end);
 				}
 				printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
 			} else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
 				++fixations_start;
 				time = t;
-				saccades.push_back(new Saccade(*(Saccade*)x.value.value));
+				Saccade* s = (Saccade*)x.value.value;
+				data.push_back(new CRISP_d(
+						s->id,
+						s->cancelations,
+						(s->labile_stop - s->labile_start),
+						(s->nonlabile_stop - s->nonlabile_start),
+						(s->exec_stop - s->exec_start),
+						0.0
+						));
 				printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
 				printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", fixations_start);
 			}
@@ -42,7 +50,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 };
 
 
-int crisp(
+list<CRISP_d*> crisp(
 		int n,
 		double tsac, double N,
 		double m_lab, double sd_lab,
@@ -71,23 +79,15 @@ int crisp(
 	{
 		sim.execNextEvent();
 	}
-	list<Saccade*>::iterator saccades = s->saccades.begin();
-	for ( ;saccades != s->saccades.end(); saccades++) {
-		cout << (*saccades)->id << "\t"
-				<< (*saccades)->cancelations << "\t"
-				<< (*saccades)->labile_stop - (*saccades)->labile_start << "\t"
-				<< (*saccades)->nonlabile_stop - (*saccades)->nonlabile_start << "\t"
-				<< (*saccades)->exec_stop - (*saccades)->exec_start << "\t"
-				<< (*saccades)->fixation_duration
+	list<CRISP_d*>::iterator d = s->data.begin();
+	for ( ;d != s->data.end(); d++) {
+		cout << (*d)->id << "\t"
+				<< (*d)->cancelations << "\t"
+				<< (*d)->labile << "\t"
+				<< (*d)->nonlabile << "\t"
+				<< (*d)->exec << "\t"
+				<< (*d)->fixation
 				<< endl;
 	}
-	std::vector<double> durations(n);
-	std::vector<double> cancelations(n);
-	std::vector<double> labile(n);
-	/*return Rcpp::DataFrame::create(
-			Rcpp::Named("duration")=durations,
-			Rcpp::Named("cancelations")=cancelations,
-			Rcpp::Named("labile")=labile
-			);*/
-	return 0;
+	return s->data;
 }

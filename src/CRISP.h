@@ -2,8 +2,9 @@
 #define CRISP_h_
 
 #include <Rcpp.h>
+#include "Data.h"
 
-int crisp(
+std::list<CRISP_d*> crisp(
 		int n,
 		double tsac, double N1,
 		double m_lab, double sd_lab,
