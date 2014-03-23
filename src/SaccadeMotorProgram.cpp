@@ -31,7 +31,7 @@ void SaccadeMotorProgram::delta_ext(double e, const Bag<IO_Type>& xb)
 
 	_time += e;
 	if (_saccade) {
-		printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
+		//printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
 	}
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_threshold = dist(_twister);
