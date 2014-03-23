@@ -1,7 +1,7 @@
 CXXFLAGS	= -march=native -O3 -pipe -std=c++11 -Wall -g -pedantic -fopenmp
 INCLUDE		= -Iinclude
 
-CRISP_OBJS	= SaccadeTimer.o SaccadeTargetPlanner.o SaccadeMovementProgrammer.o SaccadeExec.o
+CRISP_OBJS	= SaccadeTimer.o SaccadeTargetSelect.o SaccadeMotorProgram.o SaccadeExec.o
 
 .SUFFIXES: .cpp
 .cpp.o:
