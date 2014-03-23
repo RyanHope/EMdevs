@@ -34,7 +34,7 @@ void SaccadeExec::delta_ext(double e, const Bag<IO_Type>& xb)
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_threshold = dist(_twister);
 
-	printf(BLUE "%f\t    SaccadeExec: saccade[id=%d] START\n" RESET, _time, _saccade->id);
+	//printf(BLUE "%f\t    SaccadeExec: saccade[id=%d] START\n" RESET, _time, _saccade->id);
 
 }
 
@@ -50,7 +50,7 @@ void SaccadeExec::output_func(Bag<IO_Type>& yb)
 	yb.insert(output);
 	_time += _threshold;
 	_threshold = DBL_MAX;
-	printf(GREEN "%f\t    SaccadeExec: saccade[id=%d] END\n" RESET, _time, _saccade->id);
+	//printf(GREEN "%f\t    SaccadeExec: saccade[id=%d] END\n" RESET, _time, _saccade->id);
 }
 
 void SaccadeExec::gc_output(Bag<IO_Type>& g)

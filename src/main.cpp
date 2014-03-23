@@ -18,15 +18,17 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 		int fixations_end;
 		std::vector<double> durations;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+			//cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
 				if (fixations_start>0) {
-					printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", ++fixations_end);
+					++fixations_end;
+					//printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", ++fixations_end);
 				}
-				printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
+				//printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
 			} else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
-				printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
-				printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", ++fixations_start);
+				++fixations_start;
+				//printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
+				//printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", ++fixations_start);
 			}
 		}
 };
