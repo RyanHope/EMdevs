@@ -35,7 +35,7 @@ DataFrame crispR(
 			Named("id")=id,
 			Named("cancelations")=cancelations,
 			Named("labile")=labile,
-			Named("nonlabile")=labile,
+			Named("nonlabile")=nonlabile,
 			Named("exec")=exec,
 			Named("fixation")=fixation
 			);
