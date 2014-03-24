@@ -7,7 +7,7 @@ const int SaccadeTargetSelect::labile = 0;
 const int SaccadeTargetSelect::nonlabile = 1;
 
 SaccadeTargetSelect::SaccadeTargetSelect(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
-		_mean(180),
+		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
 {

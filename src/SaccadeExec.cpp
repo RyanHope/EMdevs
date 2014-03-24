@@ -7,8 +7,6 @@ const int SaccadeExec::execute = 0;
 const int SaccadeExec::fixation = 1;
 
 SaccadeExec::SaccadeExec(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
-		_mean(40),
-		_stdev(13),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)

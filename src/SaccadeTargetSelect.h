@@ -7,7 +7,7 @@
 class SaccadeTargetSelect: public adevs::Atomic<IO_Type>
 {
 	public:
-		SaccadeTargetSelect(std::mt19937& twister, double mean, double stdev);
+		SaccadeTargetSelect(std::mt19937& twister, double mean=180, double stdev=45);
 		void delta_int();
 		void delta_ext(double e, const adevs::Bag<IO_Type>& xb);
 		void delta_conf(const adevs::Bag<IO_Type>& xb);

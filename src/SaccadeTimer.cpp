@@ -11,8 +11,8 @@ SaccadeTimer::SaccadeTimer(std::mt19937& twister, std::uniform_real_distribution
 {
 	_twister = twister;
 	_unif_dist = unif_dist;
-  _mean_duration = mean_duration;
-  _states = states;
+	_mean_duration = mean_duration;
+	_states = states;
 	delta_int();
 }
 

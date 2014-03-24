@@ -7,7 +7,7 @@
 class SaccadeExec: public adevs::Atomic<IO_Type>
 {
 	public:
-		SaccadeExec(std::mt19937& twister, double mean, double stdev);
+		SaccadeExec(std::mt19937& twister, double mean=40, double stdev=13);
 		void delta_int();
 		void delta_ext(double e, const adevs::Bag<IO_Type>& xb);
 		void delta_conf(const adevs::Bag<IO_Type>& xb);
