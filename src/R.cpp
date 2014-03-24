@@ -21,8 +21,8 @@ DataFrame crispR(
 	std::vector<double> nonlabile(n);
 	std::vector<double> exec(n);
 	std::vector<double> fixation(n);
-	list<CRISP_d*> data = crisp(n, tsac, N, m_lab, sd_lab, m_nlab, sd_nlab, m_ex, sd_ex);
-	list<CRISP_d*>::iterator d = data.begin();
+	vector<CRISP_d*> data = crisp(n, tsac, N, m_lab, sd_lab, m_nlab, sd_nlab, m_ex, sd_ex);
+	vector<CRISP_d*>::iterator d = data.begin();
 	for (int i=0 ;d != data.end(); d++,i++) {
 		id[i] = (*d)->id;
 		cancelations[i] = (*d)->cancelations;

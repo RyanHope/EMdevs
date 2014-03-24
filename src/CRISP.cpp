@@ -17,7 +17,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 		StateListener(int n):fixations_start(0),fixations_end(0),data(){}
 		int fixations_start;
 		int fixations_end;
-		list<CRISP_d*> data;
+		vector<CRISP_d*> data;
 		double time = 0;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
 			//cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
@@ -48,7 +48,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 };
 
 
-list<CRISP_d*> crisp(
+vector<CRISP_d*> crisp(
 		int n,
 		double tsac, double N,
 		double m_lab, double sd_lab,
