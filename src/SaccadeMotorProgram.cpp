@@ -31,16 +31,17 @@ void SaccadeMotorProgram::delta_ext(double e, const Bag<IO_Type>& xb)
 
 	_time += e;
 	if (_saccade) {
-		printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
+		//printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
+		return;
 	}
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_saccade->labile_stop = _time;
 	_saccade->nonlabile_start = _time;
 	_threshold = dist(_twister);
 
-	printf("%f\t    SaccadeMotorProgram: Starting non-labile programming for saccade[id=%d]\n", _time, _saccade->id);
+	//printf("%f\t    SaccadeMotorProgram: Starting non-labile programming for saccade[id=%d]\n", _time, _saccade->id);
 
-	printf("%f\t    SaccadeMotorProgram: Next event at %f\n", _time, _time+_threshold);
+	//printf("%f\t    SaccadeMotorProgram: Next event at %f\n", _time, _time+_threshold);
 }
 
 void SaccadeMotorProgram::delta_conf(const Bag<IO_Type>& xb)
@@ -55,7 +56,7 @@ void SaccadeMotorProgram::output_func(Bag<IO_Type>& yb)
 	yb.insert(output);
 	_time += _threshold;
 	_threshold = DBL_MAX;
-	printf("%f\t    SaccadeMotorProgram: Non-labile programming complete\n", _time);
+	//printf("%f\t    SaccadeMotorProgram: Non-labile programming complete\n", _time);
 }
 
 void SaccadeMotorProgram::gc_output(Bag<IO_Type>& g)

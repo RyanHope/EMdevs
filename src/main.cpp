@@ -13,5 +13,17 @@ int main(int argc, char** argv)
 		else return(-1);
 	}
 	list<CRISP_d*> data = crisp(N, 250, 11, 180, 45, 40, 10, 40, 13);
+	/*
+	list<CRISP_d*>::iterator d = data.begin();
+	for ( ;d != data.end(); d++) {
+		cout << (*d)->id << "\t"
+				<< (*d)->cancelations << "\t"
+				<< (*d)->labile << "\t"
+				<< (*d)->nonlabile << "\t"
+				<< (*d)->exec << "\t"
+				<< (*d)->fixation
+				<< endl;
+	}
+	*/
 	return 0;
 }

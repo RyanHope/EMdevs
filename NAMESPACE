@@ -1,0 +1,3 @@
+useDynLib(EMdevs)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)

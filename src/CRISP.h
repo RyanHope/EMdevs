@@ -1,8 +1,8 @@
 #ifndef CRISP_h_
 #define CRISP_h_
 
-#include <Rcpp.h>
 #include "Data.h"
+#include <list>
 
 std::list<CRISP_d*> crisp(
 		int n,

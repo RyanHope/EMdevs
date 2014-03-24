@@ -1,5 +1,7 @@
 *.o
+*.so
 crisp
 .project
 .cproject
 .settings
+.Rproj.user

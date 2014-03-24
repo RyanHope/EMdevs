@@ -42,7 +42,7 @@ void SaccadeTimer::output_func(Bag<IO_Type>& yb)
 	IO_Type output(labile, saccade);
 	yb.insert(output);
 	_time += _threshold;
-	printf("%f\tSaccadeTimer: Threshold reached for new saccade[id=%d] \n", _time, saccade->id);
+	//printf("%f\tSaccadeTimer: Threshold reached for new saccade[id=%d] \n", _time, saccade->id);
 }
 
 void SaccadeTimer::gc_output(Bag<IO_Type>& g)

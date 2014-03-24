@@ -8,7 +8,6 @@
 #include "SaccadeExec.h"
 
 #include "CRISP.h"
-#include <Rcpp.h>
 
 using namespace std;
 using namespace adevs;
@@ -22,15 +21,15 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 		list<CRISP_d*> data;
 		double time = 0;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+			//cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
 				if (fixations_start>0) {
 					++fixations_end;
 					CRISP_d* d = data.back();
 					d->fixation = t - time;
-					printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", fixations_end);
+					//printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", fixations_end);
 				}
-				printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
+				//printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
 			} else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
 				++fixations_start;
 				time = t;
@@ -43,8 +42,8 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 						(s->exec_stop - s->exec_start),
 						0.0
 						));
-				printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
-				printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", fixations_start);
+				//printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
+				//printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", fixations_start);
 			}
 		}
 };
@@ -78,16 +77,6 @@ list<CRISP_d*> crisp(
 	while (s->fixations_end < n && sim.nextEventTime() < DBL_MAX)
 	{
 		sim.execNextEvent();
-	}
-	list<CRISP_d*>::iterator d = s->data.begin();
-	for ( ;d != s->data.end(); d++) {
-		cout << (*d)->id << "\t"
-				<< (*d)->cancelations << "\t"
-				<< (*d)->labile << "\t"
-				<< (*d)->nonlabile << "\t"
-				<< (*d)->exec << "\t"
-				<< (*d)->fixation
-				<< endl;
 	}
 	return s->data;
 }
