@@ -1,3 +1,4 @@
+#include "Rmath.h"
 #include "SaccadeExec.h"
 #include "ansi.h"
 using namespace std;
@@ -6,12 +7,11 @@ using namespace adevs;
 const int SaccadeExec::execute = 0;
 const int SaccadeExec::fixation = 1;
 
-SaccadeExec::SaccadeExec(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
+SaccadeExec::SaccadeExec(double mean, double stdev):Atomic<IO_Type>(),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
 {
-	_twister = twister;
 	_mean = mean;
 	_stdev = stdev;
 }
@@ -34,7 +34,7 @@ void SaccadeExec::delta_ext(double e, const Bag<IO_Type>& xb)
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_saccade->nonlabile_stop = _time;
 	_saccade->exec_start = _time;
-	_threshold = dist(_twister);
+	_threshold = ::Rf_rgamma(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
 
 	//printf(BLUE "%f\t    SaccadeExec: saccade[id=%d] START\n" RESET, _time, _saccade->id);
 

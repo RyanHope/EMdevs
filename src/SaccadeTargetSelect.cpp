@@ -3,15 +3,16 @@
 using namespace std;
 using namespace adevs;
 
+#include "Rmath.h"
+
 const int SaccadeTargetSelect::labile = 0;
 const int SaccadeTargetSelect::nonlabile = 1;
 
-SaccadeTargetSelect::SaccadeTargetSelect(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
+SaccadeTargetSelect::SaccadeTargetSelect(double mean, double stdev):Atomic<IO_Type>(),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
 {
-	_twister = twister;
 	_mean = mean;
 	_stdev = stdev;
 }
@@ -27,7 +28,6 @@ void SaccadeTargetSelect::delta_int()
 
 void SaccadeTargetSelect::delta_ext(double e, const Bag<IO_Type>& xb)
 {
-	std::gamma_distribution<double> dist(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
 	_time += e;
 	Saccade* saccade = new Saccade(*((*xb.begin()).value));
 	if (_saccade) {
@@ -39,7 +39,7 @@ void SaccadeTargetSelect::delta_ext(double e, const Bag<IO_Type>& xb)
 	}
 	//printf("%f\t  SaccadeTargetSelect: Starting new labile programming\n", _time);
 	_saccade = saccade;
-	_threshold = dist(_twister);
+	_threshold = ::Rf_rgamma(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
 
 	//printf("%f\t  SaccadeTargetSelect: Next event at %f\n", _time, _time+_threshold);
 }

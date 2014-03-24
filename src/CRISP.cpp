@@ -1,5 +1,4 @@
-#include <random>
-#include <chrono>
+#include "Rcpp.h"
 
 #include "Saccade.h"
 #include "SaccadeTimer.h"
@@ -56,14 +55,12 @@ list<CRISP_d*> crisp(
 		double m_nlab, double sd_nlab,
 		double m_ex, double sd_ex)
 {
-	std::mt19937 twister(std::chrono::system_clock::now().time_since_epoch().count());
-	std::uniform_real_distribution<> unif_dist(0, 1);
-
+	Rcpp::RNGScope scope;
 	Digraph<Saccade*> crisp;
-	SaccadeTimer* timer = new SaccadeTimer(twister, unif_dist, tsac, N);
-	SaccadeTargetSelect* target = new SaccadeTargetSelect(twister, m_lab, sd_lab);
-	SaccadeMotorProgram* motor = new SaccadeMotorProgram(twister, m_nlab, sd_nlab);
-	SaccadeExec* exec = new SaccadeExec(twister, m_ex, sd_ex);
+	SaccadeTimer* timer = new SaccadeTimer(tsac, N);
+	SaccadeTargetSelect* target = new SaccadeTargetSelect(m_lab, sd_lab);
+	SaccadeMotorProgram* motor = new SaccadeMotorProgram(m_nlab, sd_nlab);
+	SaccadeExec* exec = new SaccadeExec(m_ex, sd_ex);
 	crisp.add(timer);
 	crisp.add(target);
 	crisp.add(motor);

@@ -1,3 +1,4 @@
+#include "Rmath.h"
 #include "SaccadeMotorProgram.h"
 #include "ansi.h"
 using namespace std;
@@ -6,12 +7,11 @@ using namespace adevs;
 const int SaccadeMotorProgram::nonlabile = 0;
 const int SaccadeMotorProgram::execute = 1;
 
-SaccadeMotorProgram::SaccadeMotorProgram(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
+SaccadeMotorProgram::SaccadeMotorProgram(double mean, double stdev):Atomic<IO_Type>(),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
 {
-	_twister = twister;
 	_mean = mean;
 	_stdev = stdev;
 }
@@ -37,7 +37,7 @@ void SaccadeMotorProgram::delta_ext(double e, const Bag<IO_Type>& xb)
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_saccade->labile_stop = _time;
 	_saccade->nonlabile_start = _time;
-	_threshold = dist(_twister);
+	_threshold = ::Rf_rgamma(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
 
 	//printf("%f\t    SaccadeMotorProgram: Starting non-labile programming for saccade[id=%d]\n", _time, _saccade->id);
 

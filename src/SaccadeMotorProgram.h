@@ -7,7 +7,7 @@
 class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 {
 	public:
-		SaccadeMotorProgram(std::mt19937& twister, double mean=40, double stdev=10);
+		SaccadeMotorProgram(double mean=40, double stdev=10);
 		void delta_int();
 		void delta_ext(double e, const adevs::Bag<IO_Type>& xb);
 		void delta_conf(const adevs::Bag<IO_Type>& xb);
@@ -20,7 +20,6 @@ class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 	private:
 		double _mean;
 		double _stdev;
-		std::mt19937 _twister;
 		double _time;
 		double _threshold;
 		Saccade* _saccade;
