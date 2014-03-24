@@ -23,7 +23,7 @@ class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 		std::mt19937 _twister;
 		double _time;
 		double _threshold;
-		std::list<Saccade*> _saccades;
+		Saccade* _saccade;
 };
 
 #endif
