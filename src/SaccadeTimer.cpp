@@ -4,15 +4,15 @@ using namespace adevs;
 
 const int SaccadeTimer::labile = 1;
 
-SaccadeTimer::SaccadeTimer(std::mt19937& twister, std::uniform_real_distribution<>& unif_dist):Atomic<IO_Type>(),
+SaccadeTimer::SaccadeTimer(std::mt19937& twister, std::uniform_real_distribution<>& unif_dist, double mean_duration, int states):Atomic<IO_Type>(),
 		_threshold(0.0),
 		_time(0.0),
-		_mean_duration(250),
-		_states(11),
 		_n(0)
 {
 	_twister = twister;
 	_unif_dist = unif_dist;
+  _mean_duration = mean_duration;
+  _states = states;
 	delta_int();
 }
 

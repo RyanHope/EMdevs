@@ -60,10 +60,10 @@ list<CRISP_d*> crisp(
 	std::uniform_real_distribution<> unif_dist(0, 1);
 
 	Digraph<Saccade*> crisp;
-	SaccadeTimer* timer = new SaccadeTimer(twister, unif_dist);
-	SaccadeTargetSelect* target = new SaccadeTargetSelect(twister);
-	SaccadeMotorProgram* motor = new SaccadeMotorProgram(twister);
-	SaccadeExec* exec = new SaccadeExec(twister);
+	SaccadeTimer* timer = new SaccadeTimer(twister, unif_dist, tsac, N);
+	SaccadeTargetSelect* target = new SaccadeTargetSelect(twister, m_lab, sd_lab);
+	SaccadeMotorProgram* motor = new SaccadeMotorProgram(twister, m_nlab, sd_nlab);
+	SaccadeExec* exec = new SaccadeExec(twister, m_ex, sd_ex);
 	crisp.add(timer);
 	crisp.add(target);
 	crisp.add(motor);

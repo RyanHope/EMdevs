@@ -6,14 +6,14 @@ using namespace adevs;
 const int SaccadeTargetSelect::labile = 0;
 const int SaccadeTargetSelect::nonlabile = 1;
 
-SaccadeTargetSelect::SaccadeTargetSelect(std::mt19937& twister):Atomic<IO_Type>(),
+SaccadeTargetSelect::SaccadeTargetSelect(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
 		_mean(180),
-		_stdev(45),
-		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
 {
 	_twister = twister;
+	_mean = mean;
+	_stdev = stdev;
 }
 
 double SaccadeTargetSelect::ta()

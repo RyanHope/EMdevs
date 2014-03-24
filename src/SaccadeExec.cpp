@@ -6,7 +6,7 @@ using namespace adevs;
 const int SaccadeExec::execute = 0;
 const int SaccadeExec::fixation = 1;
 
-SaccadeExec::SaccadeExec(std::mt19937& twister):Atomic<IO_Type>(),
+SaccadeExec::SaccadeExec(std::mt19937& twister, double mean, double stdev):Atomic<IO_Type>(),
 		_mean(40),
 		_stdev(13),
 		_time(0.0),
@@ -14,6 +14,8 @@ SaccadeExec::SaccadeExec(std::mt19937& twister):Atomic<IO_Type>(),
 		_saccade(NULL)
 {
 	_twister = twister;
+	_mean = mean;
+	_stdev = stdev;
 }
 
 double SaccadeExec::ta()
