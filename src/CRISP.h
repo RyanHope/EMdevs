@@ -1,10 +1,10 @@
 #ifndef CRISP_h_
 #define CRISP_h_
 
-#include "Data.h"
+#include "Saccade.h"
 #include <vector>
 
-std::vector<CRISP_d*> crisp(
+std::vector<Saccade*> crisp(
 		int n,
 		double tsac, double N1,
 		double m_lab, double sd_lab,

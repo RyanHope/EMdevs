@@ -14,41 +14,19 @@ using namespace adevs;
 class StateListener: public EventListener< PortValue<Saccade*> >
 {
 	public:
-		StateListener(int n):fixations_start(0),fixations_end(0),data(){}
-		int fixations_start;
-		int fixations_end;
-		vector<CRISP_d*> data;
-		double time = 0;
+		StateListener():data(),count(0){}
+		vector<Saccade*> data;
+		int count;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			//cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
-				if (fixations_start>0) {
-					++fixations_end;
-					CRISP_d* d = data.back();
-					d->fixation = t - time;
-					//printf("~~@@~~~~ | Fixation %d End | ~~~~@@~~\n", fixations_end);
-				}
-				//printf("~~@@~~~~ | Saccade Start | ~~~~@@~~\n");
-			} else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
-				++fixations_start;
-				time = t;
-				Saccade* s = (Saccade*)x.value.value;
-				data.push_back(new CRISP_d(
-						s->id,
-						s->cancelations,
-						(s->labile_stop - s->labile_start),
-						(s->nonlabile_stop - s->nonlabile_start),
-						(s->exec_stop - s->exec_start),
-						0.0
-						));
-				//printf("~~@@~~~~ | Saccade End | ~~~~@@~~\n");
-				//printf("~~@@~~~~ | Fixation %d Start | ~~~~@@~~\n", fixations_start);
+			if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
+				data.push_back(new Saccade(*x.value.value));
+				count++;
 			}
 		}
 };
 
 
-vector<CRISP_d*> crisp(
+vector<Saccade*> crisp(
 		int n,
 		double tsac, double N,
 		double m_lab, double sd_lab,
@@ -69,9 +47,9 @@ vector<CRISP_d*> crisp(
 	crisp.couple(target, target->nonlabile, motor, motor->nonlabile);
 	crisp.couple(motor, motor->execute, exec, exec->execute);
 	Simulator< PortValue<Saccade*> > sim(&crisp);
-	StateListener* s = new StateListener(N);
+	StateListener* s = new StateListener();
 	sim.addEventListener(s);
-	while (s->fixations_end < n && sim.nextEventTime() < DBL_MAX)
+	while (s->count < n && sim.nextEventTime() < DBL_MAX)
 	{
 		sim.execNextEvent();
 	}

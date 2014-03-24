@@ -32,11 +32,12 @@ void SaccadeTargetSelect::delta_ext(double e, const Bag<IO_Type>& xb)
 	Saccade* saccade = new Saccade(*((*xb.begin()).value));
 	if (_saccade) {
 		saccade->cancelations = ++_saccade->cancelations;
-		saccade->labile_start = _saccade->labile_start;
+		saccade->labile_first = _saccade->labile_first;
 		//printf(RED "%f\t  SaccadeTargetSelect: Canceling saccade[id=%d|%d]\n" RESET, _time, _saccade->id, _saccade->cancelations);
 	} else {
-		saccade->labile_start = _time;
+		saccade->labile_first = _time;
 	}
+	saccade->labile_start = _time;
 	//printf("%f\t  SaccadeTargetSelect: Starting new labile programming\n", _time);
 	_saccade = saccade;
 	_threshold = ::Rf_rgamma(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
