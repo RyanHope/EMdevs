@@ -3,6 +3,7 @@
 #define __SaccadeMotorProgram_h_
 #include "adevs.h"
 #include "Saccade.h"
+#include <list>
 
 class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 {
@@ -23,7 +24,7 @@ class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 		double _stdev;
 		double _time;
 		double _threshold;
-		Saccade* _saccade;
+		std::list<Saccade*> _saccades;
 };
 
 #endif

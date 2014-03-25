@@ -1,13 +1,16 @@
 #include "Rmath.h"
+#include "Rcpp.h"
 #include "SaccadeExec.h"
 #include "ansi.h"
 using namespace std;
 using namespace adevs;
+using namespace Rcpp;
 
 const int SaccadeExec::execute = 0;
 const int SaccadeExec::fixation = 1;
 
 SaccadeExec::SaccadeExec(double mean, double stdev):Atomic<IO_Type>(),
+		jams(0),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
@@ -29,6 +32,11 @@ void SaccadeExec::delta_ext(double e, const Bag<IO_Type>& xb)
 {
 	_time += e;
 
+	if (_saccade) {
+		//Rcout << "Saccade Exec Jam" << endl;
+		jams++;
+		return;
+	}
 	_saccade = new Saccade(*((*xb.begin()).value));
 	_saccade->nonlabile_stop = _time;
 	_saccade->exec_start = _time;

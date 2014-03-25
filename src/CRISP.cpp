@@ -59,6 +59,6 @@ CRISP_t crisp(
 		sim.execNextEvent();
 	}
 	s->data.erase(s->data.begin());
-	CRISP_t out = {&s->data,motor->jams};
+	CRISP_t out = {&s->data,exec->jams};
 	return out;
 }

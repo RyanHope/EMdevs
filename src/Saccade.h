@@ -10,6 +10,7 @@ struct Saccade
 	double labile_first;
 	double labile_start;
 	double labile_stop;
+	double nonlabile_t;
 	double nonlabile_start;
 	double nonlabile_stop;
 	double exec_start;
@@ -21,6 +22,7 @@ struct Saccade
 		labile_first(0.0),
 		labile_start(0.0),
 		labile_stop(0.0),
+		nonlabile_t(0.0),
 		nonlabile_start(0.0),
 		nonlabile_stop(0.0),
 		exec_start(0.0),
