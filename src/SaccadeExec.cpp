@@ -27,8 +27,6 @@ void SaccadeExec::delta_int()
 
 void SaccadeExec::delta_ext(double e, const Bag<IO_Type>& xb)
 {
-	std::gamma_distribution<double> dist(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
-
 	_time += e;
 
 	_saccade = new Saccade(*((*xb.begin()).value));

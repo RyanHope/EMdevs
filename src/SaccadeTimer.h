@@ -1,8 +1,6 @@
 
 #ifndef __SaccadeTimer_h_
 #define __SaccadeTimer_h_
-#include <random>
-#include <cmath>
 #include "adevs.h"
 #include "Saccade.h"
 

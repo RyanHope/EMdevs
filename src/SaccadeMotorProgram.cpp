@@ -28,8 +28,6 @@ void SaccadeMotorProgram::delta_int()
 
 void SaccadeMotorProgram::delta_ext(double e, const Bag<IO_Type>& xb)
 {
-	std::gamma_distribution<double> dist(((_mean*_mean)/(_stdev*_stdev)),(_stdev*_stdev)/_mean);
-
 	_time += e;
 	if (_saccade) {
 		//printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
