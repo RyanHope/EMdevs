@@ -14,12 +14,22 @@ using namespace adevs;
 class StateListener: public EventListener< PortValue<Saccade*> >
 {
 	public:
-		StateListener():data(),count(0){}
+		StateListener():data(),count(0),fix_start(0.0){}
 		vector<Saccade*> data;
 		int count;
+		double fix_start;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
-				data.push_back(new Saccade(*x.value.value));
+			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
+				//Saccade* s = x.value.value;
+				//if (count>1)
+				//	data.back()->fixation_stop = s->labile_stop;
+			}
+			else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
+				Saccade* s = new Saccade(*x.value.value);
+				s->fixation_start = fix_start;
+				s->fixation_stop = s->exec_start;
+				data.push_back(s);
+				fix_start = t;
 				count++;
 			}
 		}

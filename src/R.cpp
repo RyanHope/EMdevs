@@ -21,7 +21,8 @@ DataFrame crispR(
 	std::vector<double> labile_full(n);
 	std::vector<double> nonlabile(n);
 	std::vector<double> exec(n);
-	std::vector<double> fixation(n);
+	std::vector<double> fixation_start(n);
+	std::vector<double> fixation_stop(n);
 	vector<Saccade*> data = crisp(n, tsac, N, m_lab, sd_lab, m_nlab, sd_nlab, m_ex, sd_ex);
 	vector<Saccade*>::iterator d = data.begin();
 	for (int i=0 ;d != data.end(); d++,i++) {
@@ -31,7 +32,8 @@ DataFrame crispR(
 		labile_full[i] = (*d)->labile_stop - (*d)->labile_first;
 		nonlabile[i] = (*d)->nonlabile_stop - (*d)->nonlabile_start;
 		exec[i] = (*d)->exec_stop - (*d)->exec_start;
-		fixation[i] = (*d)->fixation_stop - (*d)->fixation_start;
+		fixation_start[i] = (*d)->fixation_start;
+		fixation_stop[i] = (*d)->fixation_stop;
 	}
 	return DataFrame::create(
 			Named("id")=id,
@@ -40,6 +42,7 @@ DataFrame crispR(
 			Named("labile_full")=labile_full,
 			Named("nonlabile")=nonlabile,
 			Named("exec")=exec,
-			Named("fixation")=fixation
+			Named("fixation_start")=fixation_start,
+			Named("fixation_stop")=fixation_stop
 			);
 }
