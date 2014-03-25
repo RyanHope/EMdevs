@@ -1,0 +1,1 @@
+PKG_CPPFLAGS =-Iinclude $(shell Rscript -e 'Rcpp:::CxxFlags()') -std=c++11 -Wall -g -pedantic
