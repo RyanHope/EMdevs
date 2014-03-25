@@ -17,6 +17,7 @@ class SaccadeMotorProgram: public adevs::Atomic<IO_Type>
 		~SaccadeMotorProgram();
 		static const int nonlabile;
 		static const int execute;
+		int jams;
 	private:
 		double _mean;
 		double _stdev;

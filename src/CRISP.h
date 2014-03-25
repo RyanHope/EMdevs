@@ -4,7 +4,13 @@
 #include "Saccade.h"
 #include <vector>
 
-std::vector<Saccade*> crisp(
+typedef struct
+{
+	std::vector<Saccade*>* saccades;
+	int jams;
+} CRISP_t;
+
+CRISP_t crisp(
 		int n,
 		double tsac, double N1,
 		double m_lab, double sd_lab,

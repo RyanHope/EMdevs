@@ -31,7 +31,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 };
 
 
-vector<Saccade*> crisp(
+CRISP_t crisp(
 		int n,
 		double tsac, double N,
 		double m_lab, double sd_lab,
@@ -59,5 +59,5 @@ vector<Saccade*> crisp(
 		sim.execNextEvent();
 	}
 	s->data.erase(s->data.begin());
-	return s->data;
+	return {&s->data,motor->jams};
 }

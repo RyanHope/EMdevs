@@ -8,6 +8,7 @@ const int SaccadeMotorProgram::nonlabile = 0;
 const int SaccadeMotorProgram::execute = 1;
 
 SaccadeMotorProgram::SaccadeMotorProgram(double mean, double stdev):Atomic<IO_Type>(),
+		jams(0),
 		_time(0.0),
 		_threshold(DBL_MAX),
 		_saccade(NULL)
@@ -32,6 +33,7 @@ void SaccadeMotorProgram::delta_ext(double e, const Bag<IO_Type>& xb)
 	_time += e;
 	if (_saccade) {
 		//printf(YELLOW "%f\t    SaccadeMotorProgram: Program saccade[id=%d] is getting canceled!\n" RESET, _time, _saccade->id);
+		jams++;
 		return;
 	}
 	_saccade = new Saccade(*((*xb.begin()).value));
