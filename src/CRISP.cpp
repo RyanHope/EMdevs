@@ -19,12 +19,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 		int count;
 		double fix_start;
 		void outputEvent(Event< PortValue<Saccade*> > x, double t){
-			if (dynamic_cast<SaccadeMotorProgram*>(x.model) != NULL) {
-				//Saccade* s = x.value.value;
-				//if (count>1)
-				//	data.back()->fixation_stop = s->labile_stop;
-			}
-			else if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
+			if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
 				Saccade* s = new Saccade(*x.value.value);
 				s->fixation_start = fix_start;
 				s->fixation_stop = s->exec_start;
@@ -59,9 +54,10 @@ vector<Saccade*> crisp(
 	Simulator< PortValue<Saccade*> > sim(&crisp);
 	StateListener* s = new StateListener();
 	sim.addEventListener(s);
-	while (s->count < n && sim.nextEventTime() < DBL_MAX)
+	while (s->count < (n+1) && sim.nextEventTime() < DBL_MAX)
 	{
 		sim.execNextEvent();
 	}
+	s->data.erase(s->data.begin());
 	return s->data;
 }
