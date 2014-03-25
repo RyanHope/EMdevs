@@ -22,7 +22,7 @@ class StateListener: public EventListener< PortValue<Saccade*> >
 			if (dynamic_cast<SaccadeExec*>(x.model) != NULL) {
 				Saccade* s = new Saccade(*x.value.value);
 				s->fixation_start = fix_start;
-				s->fixation_stop = s->exec_start;
+				s->fixation_stop = s->exec_first;
 				data.push_back(s);
 				fix_start = t;
 				count++;
@@ -59,6 +59,6 @@ CRISP_t crisp(
 		sim.execNextEvent();
 	}
 	s->data.erase(s->data.begin());
-	CRISP_t out = {&s->data,exec->jams};
+	CRISP_t out = {&s->data};
 	return out;
 }

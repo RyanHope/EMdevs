@@ -17,7 +17,6 @@ class SaccadeExec: public adevs::Atomic<IO_Type>
 		~SaccadeExec();
 		static const int execute;
 		static const int fixation;
-		int jams;
 	private:
 		double _mean;
 		double _stdev;

@@ -7,7 +7,6 @@
 typedef struct
 {
 	std::vector<Saccade*>* saccades;
-	int jams;
 } CRISP_t;
 
 CRISP_t crisp(

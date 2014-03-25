@@ -17,10 +17,12 @@ DataFrame crispR(
 {
 	std::vector<double> id(n);
 	std::vector<double> cancelations(n);
+	std::vector<double> mergers(n);
 	std::vector<double> labile(n);
 	std::vector<double> labile_full(n);
 	std::vector<double> nonlabile(n);
 	std::vector<double> exec(n);
+	std::vector<double> exec_full(n);
 	std::vector<double> fixation(n);
 	CRISP_t c = crisp(n, tsac, N, m_lab, sd_lab, m_nlab, sd_nlab, m_ex, sd_ex);
 	vector<Saccade*> data = *c.saccades;
@@ -28,21 +30,25 @@ DataFrame crispR(
 	for (int i=0 ;d != data.end(); d++,i++) {
 		id[i] = (*d)->id;
 		cancelations[i] = (*d)->cancelations;
+		mergers[i] = (*d)->mergers;
 		labile[i] = (*d)->labile_stop - (*d)->labile_start;
 		labile_full[i] = (*d)->labile_stop - (*d)->labile_first;
 		nonlabile[i] = (*d)->nonlabile_stop - (*d)->nonlabile_start;
 		exec[i] = (*d)->exec_stop - (*d)->exec_start;
+		exec_full[i] = (*d)->exec_stop - (*d)->exec_first;
 		fixation[i] = (*d)->fixation_stop - (*d)->fixation_start;
 	}
 	DataFrame out = DataFrame::create(
 			Named("id")=id,
 			Named("cancelations")=cancelations,
+			Named("mergers")=mergers,
 			Named("labile")=labile,
 			Named("labile_full")=labile_full,
 			Named("nonlabile")=nonlabile,
 			Named("exec")=exec,
+			Named("exec_full")=exec_full,
 			Named("fixation")=fixation
 			);
-	out.attr("jams") = c.jams;
+	//out.attr("jams") = c.jams;
 	return out;
 }

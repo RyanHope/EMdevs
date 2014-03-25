@@ -15,7 +15,6 @@ bool sortNonLabile(const Saccade* a, const Saccade* b)
 }
 
 SaccadeMotorProgram::SaccadeMotorProgram(double mean, double stdev):Atomic<IO_Type>(),
-		jams(0),
 		_time(0.0),
 		_threshold(DBL_MAX)
 {
