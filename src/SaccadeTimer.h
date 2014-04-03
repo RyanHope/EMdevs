@@ -18,6 +18,8 @@ class SaccadeTimer: public adevs::Atomic<IO_Type>
 		static const int labile;
 	private:
 
+		Saccade* _saccade;
+
 		double _threshold;
 		double _time;
 

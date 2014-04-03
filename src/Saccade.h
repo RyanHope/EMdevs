@@ -8,6 +8,8 @@ struct Saccade
 	int id;
 	int cancelations;
 	int mergers;
+	double timer_start;
+	double timer_stop;
 	double labile_first;
 	double labile_start;
 	double labile_stop;
@@ -19,9 +21,11 @@ struct Saccade
 	double exec_stop;
 	double fixation_start;
 	double fixation_stop;
-	Saccade(int i):
+	Saccade(int i, double start):
 		cancelations(0),
 		mergers(0),
+		timer_start(0.0),
+		timer_stop(0.0),
 		labile_first(0.0),
 		labile_start(0.0),
 		labile_stop(0.0),
@@ -35,6 +39,7 @@ struct Saccade
 		fixation_stop(0.0)
 	{
 		id = i;
+		timer_start = start;
 	}
 };
 

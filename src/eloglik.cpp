@@ -29,7 +29,7 @@ inline T quantile(const vector<T>& v, const double q)
   { return quantile(&v[0], v.size(), q); }
 
 // [[Rcpp::export]]
-double elogLik(std::vector<double> model, std::vector<double> data, double min, double max, int breaks)
+double elogLik(std::vector<double> model, std::vector<double> data, double min, double max, unsigned int breaks)
 {
   std::vector<double> m;
   std::vector<double> d;
