@@ -9,3 +9,7 @@ crisp <- function(n, tsac = 250, N = 11, m_lab = 180, sd_lab = 45, m_nlab = 40, 
     .Call('EMdevs_crispR', PACKAGE = 'EMdevs', n, tsac, N, m_lab, sd_lab, m_nlab, sd_nlab, m_ex, sd_ex)
 }
 
+elogLik <- function(model, data, min, max, breaks) {
+    .Call('EMdevs_elogLik', PACKAGE = 'EMdevs', model, data, min, max, breaks)
+}
+
