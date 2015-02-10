@@ -47,22 +47,3 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
-// elogLik
-double elogLik(std::vector<double> model, std::vector<double> data, double min, double max, unsigned int breaks);
-RcppExport SEXP EMdevs_elogLik(SEXP modelSEXP, SEXP dataSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP breaksSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< std::vector<double> >::type model(modelSEXP );
-        Rcpp::traits::input_parameter< std::vector<double> >::type data(dataSEXP );
-        Rcpp::traits::input_parameter< double >::type min(minSEXP );
-        Rcpp::traits::input_parameter< double >::type max(maxSEXP );
-        Rcpp::traits::input_parameter< unsigned int >::type breaks(breaksSEXP );
-        double __result = elogLik(model, data, min, max, breaks);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
